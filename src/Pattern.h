@@ -7,14 +7,7 @@ class Pattern{
 
 public:
 
-  Pattern setDuration(uint16_t pattern_duration);
-
-  void call();
-
-protected:
-
-    uint16_t pattern_duration;
-
+  virtual void call(LedArray _leds, uint16_t frame) = 0;
 
 };
 

@@ -2,21 +2,27 @@
 #define COLORBARS_H
 
 #include <Pattern.h>
+#include "Util.h"
 
 class ColorBars: public Pattern{
 
 public:
 
-  ColorBars(CRGB color, uint8_t length);
+  ColorBars(CRGB color, uint8_t length): color(color), length(length){}
 
-  void call();
+  void call(LedArray leds){
+      if(getFrame() % (length*2) < length){
+        leds.push(color);
+      } else {
+        leds.push(complementary_color(color));
+      }
+  }
 
 protected:
 
-    uint16_t pattern_duration;
-
+  CRGB color;
+  uint8_t length;
 
 };
-
 
 #endif

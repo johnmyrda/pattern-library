@@ -1,5 +1,5 @@
-#ifndef RAINBOW_H
-#define RAINBOW_H
+#ifndef GENERIC_H
+#define GENERIC_H
 
 #include <Pattern.h>
 
@@ -7,14 +7,18 @@ class Generic: public Pattern{
 
 public:
 
-  Generic(CRGB * pattern, uint8_t pattern_length);
+  Generic(const CRGB * pattern, const int8_t pattern_length) :
+    pattern(pattern), pattern_length(pattern_length){}
 
-  void call();
+  void call(LedArray leds, uint16_t frame){
+    int pattern_index = frame % pattern_length;
+    leds.push(pattern[pattern_index]);
+  }
 
 protected:
 
-    uint16_t pattern_duration;
-
+  const CRGB * pattern;
+  uint8_t pattern_length;
 
 };
 
