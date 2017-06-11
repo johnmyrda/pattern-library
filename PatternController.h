@@ -1,31 +1,34 @@
 #ifndef PatternController_h
 #define PatternController_h
 
-#include <inttypes.h>
-#include <FastLED.h>
 #include "Leds.h"
 #include "patterns/Pattern.h"
+#include "Arduino.h"
+#include <FastLED.h>
 
 #ifndef PATTERN_ARRAY_MAX_SIZE
-#define PATTERN_ARRAY_MAX_SIZE 64
+#define PATTERN_ARRAY_MAX_SIZE 8
 #endif
 
 class PatternController
 {
   //need to keep track of time at a class level
-  bool _cycle = true;
 
   LedArray _leds;
   Pattern* patterns[PATTERN_ARRAY_MAX_SIZE];
   uint8_t current_pattern = 0;
   uint8_t pattern_array_size = 0;
-  uint16_t pattern_duration = 30000;//ms
-  uint16_t frame;
-  uint16_t frame_interval = 100; //ms
-  uint16_t pattern_start_ts = 0;
+  uint32_t now = 0;
+  uint32_t pattern_start_ts = 0;
 
 
- public:
+public:
+    bool cycle = true;
+    uint32_t pattern_duration = 30000;//ms
+    uint16_t frame_interval = 100; //ms
+    uint16_t frame = 0;
+
+
     // Create an instance of the PatternController library
     PatternController(CRGB * leds, uint16_t length);
 
@@ -44,10 +47,6 @@ class PatternController
 
     //skip the current pattern
     void next_pattern();
-
-    //set whether or not the pattern
-    //changes automatically
-    void cycle(bool cycle);
 
     //Analagous to FastLED show
     void show();

@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "PatternController.h"
 
 PatternController::PatternController(CRGB * leds, uint16_t length){
@@ -12,8 +11,9 @@ void PatternController::set_fps(uint8_t fps){
 
 void PatternController::add(Pattern * pattern){
   if(pattern_array_size < PATTERN_ARRAY_MAX_SIZE){
-    pattern_array_size++;
     patterns[pattern_array_size] = pattern;
+    pattern_array_size++;
+    Serial.println("Pattern Added");
   }
   //Debug message if full?
 }
@@ -26,18 +26,20 @@ void PatternController::clear(){
   pattern_array_size = 0;
 }
 
-void PatternController::cycle(bool cycle){
-  _cycle = cycle;
-}
-
 void PatternController::show(){
-  uint16_t now = millis();
-  uint16_t elapsed = now - pattern_start_ts;
-  if(elapsed > pattern_duration && _cycle){
+  now = millis();
+
+  if((now - pattern_start_ts) > pattern_duration && cycle){
+    Serial.println(F("next_pattern"));
     next_pattern();
   }
-  uint16_t new_frame = elapsed / frame_interval;
+  uint16_t new_frame = (now - pattern_start_ts) / frame_interval;
   if(new_frame != frame){
+    Serial.print(F("Current (frame, new_frame): ("));
+    Serial.print(frame);
+    Serial.print(F(","));
+    Serial.print(new_frame);
+    Serial.println(F(")"));
     frame = new_frame;
     patterns[current_pattern]->call(_leds, frame);
   }
@@ -48,6 +50,8 @@ void PatternController::next_pattern(){
   if(current_pattern >= pattern_array_size){
     current_pattern = 0;
   }
-  pattern_start_ts = millis();
-  frame = 0;
+  pattern_start_ts = now;
+  Serial.print(F("Now on pattern #"));
+  Serial.println(current_pattern);
+
 }
