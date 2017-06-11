@@ -4,27 +4,31 @@
 #include "Pattern.h"
 #include "Generic.h"
 
-static const CRGB usa_pattern[9] = {
-    CRGB::Red, CRGB::Red, CRGB::Red,
-    CRGB::White, CRGB::White, CRGB::White,
-    CRGB::Blue, CRGB::Blue, CRGB::Blue
+
+
+  class Usa: public Pattern{
+
+  static const CRGB usa_pattern[3];
+
+  public:
+
+    Usa(){
+        usa_generic = Generic(usa_pattern, 3);
+    };
+
+    Usa(uint8_t repeat_length) {
+        usa_generic = Generic(usa_pattern, 3, repeat_length);
+    }
+
+    void call(LedArray leds, uint16_t frame){
+      usa_generic.call(leds, frame);
+    }
+
+
+  protected:
+    Generic usa_generic;
   };
 
-class Usa: public Pattern{
-
-public:
-
-  Usa(){};
-
-  void call(LedArray leds, uint16_t frame){
-    usa_generic.call(leds, frame);
-  }
-
-
-protected:
-
-  Generic usa_generic = Generic(usa_pattern, 9);
-
-};
+  const CRGB Usa::usa_pattern[3] = {CRGB::Red, CRGB::White, CRGB::Blue};
 
 #endif
