@@ -35,11 +35,6 @@ void PatternController::show(){
   }
   uint16_t new_frame = (now - pattern_start_ts) / frame_interval;
   if(new_frame != frame){
-    Serial.print(F("Current (frame, new_frame): ("));
-    Serial.print(frame);
-    Serial.print(F(","));
-    Serial.print(new_frame);
-    Serial.println(F(")"));
     frame = new_frame;
     patterns[current_pattern]->call(_leds, frame);
   }
