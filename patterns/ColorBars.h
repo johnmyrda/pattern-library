@@ -8,19 +8,26 @@ class ColorBars: public Pattern{
 
 public:
 
-  ColorBars(CRGB color, uint8_t length): color(color), length(length){}
+
+
+  ColorBars(CRGB color1, CRGB color2, const uint8_t length): color1(color1), color2(color2), length(length){}
 
   void call(LedArray leds, uint16_t frame){
       if(frame % (length*2) < length){
-        leds.push(color);
+        leds.push(color1);
       } else {
-        leds.push(complementary_color(color));
+        leds.push(color2);
       }
+  }
+
+  void randomize(){
+    fillRandomContrastingColors(color1, color2);
   }
 
 protected:
 
-  CRGB color;
+  CRGB color1;
+  CRGB color2;
   uint8_t length;
 
 };
