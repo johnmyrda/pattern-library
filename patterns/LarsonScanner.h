@@ -10,7 +10,7 @@ public:
 
   //LarsonScanner(){};
 
-  LarsonScanner(const CRGB color1, const CRGB color2) : color1(color1), color2(color2){}
+  LarsonScanner(CRGB color1, CRGB color2) : color1(color1), color2(color2){}
 
   void call(LedArray leds, uint16_t frame){
     // 0 == forwards, 1 = backwards
@@ -22,9 +22,13 @@ public:
     }
   }
 
+  void randomize(){
+    fillRandomContrastingColors(color1, color2);
+  }
+
 protected:
-  const CRGB color1;
-  const CRGB color2;
+  CRGB color1;
+  CRGB color2;
 
 };
 
