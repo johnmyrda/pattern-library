@@ -46,7 +46,10 @@ void PatternController::next_pattern(){
     current_pattern = 0;
   }
   pattern_start_ts = now;
-  Serial.print(F("Now on pattern #"));
-  Serial.println(current_pattern);
+  if(randomize){
+    Serial.print("Randomizing pattern #");
+    Serial.println(current_pattern);
+    patterns[current_pattern]->randomize();
+  }
 
 }

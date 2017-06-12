@@ -24,6 +24,7 @@ class PatternController
 
 public:
     bool cycle = true;
+    bool randomize = true;
     uint32_t pattern_duration = 30000;//ms
     uint16_t frame_interval = 100; //ms
     uint16_t frame = 0;
