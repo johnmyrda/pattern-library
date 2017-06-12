@@ -9,6 +9,8 @@ public:
 
   virtual void call(LedArray _leds, uint16_t frame) = 0;
 
+  virtual void randomize(){};
+
 };
 
 
