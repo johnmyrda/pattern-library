@@ -7,6 +7,8 @@
 
 class BeaconPulse2: public Pattern{
 
+enum Direction {INCREASING, DECREASING};
+
 public:
 
   BeaconPulse2(){
@@ -17,14 +19,23 @@ public:
 
   void call(LedArray leds, uint16_t frame){
     uint8_t cur_brightness = sin8(frame * speed);
-    uint8_t wavelength = max_levels / speed;
+    //uint8_t wavelength = max_levels / speed;
     uint8_t num_beacons = leds.length / LEDS_PER_BEACON;
-    uint8_t cur_beacon_number = (frame / wavelength) % num_beacons;
+    if(cur_brightness >= prev_brightness){
+      if(direction == DECREASING){
+        beacon_number = (beacon_number + 1) % num_beacons;
+      }
+      direction = INCREASING;
+    } else {
+      direction = DECREASING;
+    }
+    prev_brightness = cur_brightness;
+    //uint8_t cur_beacon_number = (frame / wavelength) % num_beacons;
     Serial.print("cur_brightness: ");
     Serial.println(cur_brightness);
     for(uint16_t i = 0; i < leds.length; i++){
-      uint8_t beacon_number = i / LEDS_PER_BEACON;
-      if((beacon_number + cur_beacon_number) % 2){
+      uint8_t cur_beacon = i / LEDS_PER_BEACON;
+      if((cur_beacon + beacon_number) % 2){
         leds.leds[i] = color;
         leds.leds[i].subtractFromRGB(255 - cur_brightness);
       } else{
@@ -40,8 +51,13 @@ public:
 
 protected:
   CRGB color;
+  Direction direction = INCREASING;
   uint8_t speed = 2;
+  uint8_t prev_brightness = 0;
+  uint8_t beacon_number = 0;
   static constexpr uint16_t max_levels = 256;
+
+
 };
 
 #endif
