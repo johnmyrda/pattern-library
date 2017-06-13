@@ -17,7 +17,7 @@ public:
 
   void call(LedArray leds, uint16_t frame){
     uint8_t modifier = max_levels / brightness_levels;
-    uint8_t cur_brightness = (frame % brightness_levels) * modifier + modifier - 1;// frame % 256
+    uint8_t cur_brightness = (frame % brightness_levels) * modifier + modifier - 1;
 
     uint8_t num_beacons = leds.length / LEDS_PER_BEACON;
     uint8_t cur_beacon_number = (frame / brightness_levels) % num_beacons;
