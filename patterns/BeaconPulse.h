@@ -24,10 +24,10 @@ public:
     uint8_t prev_beacon_number = (cur_beacon_number + num_beacons - 1) % num_beacons;
     for(uint16_t i = 0; i < leds.length; i++){
       uint8_t beacon_number = i / LEDS_PER_BEACON;
-      if(beacon_number == cur_beacon_number){
+      if(beacon_number % spacing == cur_beacon_number % spacing){
         leds.leds[i] = color;
         leds.leds[i].subtractFromRGB(255 - cur_brightness);
-      } else if(beacon_number == prev_beacon_number){
+      } else if(beacon_number % spacing == prev_beacon_number % spacing){
         leds.leds[i] = color;
         leds.leds[i].subtractFromRGB(cur_brightness);
       } else{
@@ -54,6 +54,7 @@ protected:
   CRGB color;
   uint16_t brightness_levels = 64;
   static constexpr uint16_t max_levels = 256;
+  static constexpr uint8_t spacing = 3;
 };
 
 #endif
