@@ -12,20 +12,26 @@ public:
 
   void call(LedArray leds, uint16_t frame){
       uint8_t segments = leds.length/length;
-      for(int i = 0; i < segments; i++){
-        apply_lightning(&leds.leds[i*length], length);
+
+      time_since_last_strike = millis() - time_of_last_strike;
+      if(time_since_last_strike > min_time_between_strikes){
+        for(int i = 0; i < segments; i++){
+          apply_lightning(&leds.leds[i*length], length);
+        }
+      } else{
+        fadeToBlackBy(leds.leds, leds.length, 8);
       }
       //add some stuff for final non-uniform segment, if any
   }
 
   void apply_lightning(CRGB * leds, uint8_t segment_length){
     uint8_t random_strike = random8();
-    const uint8_t strike_frequency = 5;
-    time_since_last_strike = millis() - time_of_last_strike;
-    if(random_strike < strike_frequency && time_since_last_strike > min_time_between_strikes){
-      time_since_last_strike = 0;
-      time_of_last_strike = millis();
-      min_time_between_strikes = random16(500, 3000);
+    if(random_strike < strike_frequency){
+      if(time_since_last_strike != 0){
+        time_since_last_strike = 0;
+        time_of_last_strike = millis();
+        min_time_between_strikes = random16(500, 3000);
+      }
       fill_solid(leds, segment_length, color);
     } else {
       fadeToBlackBy(leds, segment_length, 8);
@@ -48,6 +54,7 @@ protected:
   uint16_t time_since_last_strike = 1000;
   uint16_t time_of_last_strike = 0;
   uint16_t min_time_between_strikes = 800;
+  const uint8_t strike_frequency = 5;
 
 };
 
