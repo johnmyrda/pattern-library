@@ -8,7 +8,7 @@ class Lightning: public Pattern{
 
 public:
 
-  Lightning(CRGB color, uint8_t strike_frequency ,const uint8_t length): color(color), strike_frequency(strike_frequency), length(length){}
+  Lightning(CRGB color, const uint8_t length): color(color), length(length){}
 
   void call(LedArray leds, uint16_t frame){
       uint8_t segments = leds.length/length;
@@ -20,7 +20,10 @@ public:
 
   void apply_lightning(CRGB * leds, uint8_t segment_length){
     uint8_t random_strike = random8();
-    if(random_strike > strike_frequency){
+    const uint8_t strike_frequency = 5;
+    const uint8_t secondary_strike_threshold = 200;
+    uint8_t segment_luma = leds[0].getLuma();
+    if(random_strike < strike_frequency && (segment_luma > secondary_strike_threshold || segment_luma == 0)){
       fill_solid(leds, segment_length, color);
     } else {
       fadeToBlackBy(leds, segment_length, 8);
@@ -39,7 +42,6 @@ public:
 protected:
 
   CRGB color;
-  uint8_t strike_frequency;
   uint8_t length;
 
 };
