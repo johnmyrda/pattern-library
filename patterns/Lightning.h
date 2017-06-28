@@ -21,9 +21,11 @@ public:
   void apply_lightning(CRGB * leds, uint8_t segment_length){
     uint8_t random_strike = random8();
     const uint8_t strike_frequency = 5;
-    const uint8_t secondary_strike_threshold = 200;
-    uint8_t segment_luma = leds[0].getLuma();
-    if(random_strike < strike_frequency && (segment_luma > secondary_strike_threshold || segment_luma == 0)){
+    time_since_last_strike = millis() - time_of_last_strike;
+    if(random_strike < strike_frequency && time_since_last_strike > min_time_between_strikes){
+      time_since_last_strike = 0;
+      time_of_last_strike = millis();
+      min_time_between_strikes = random16(500, 3000);
       fill_solid(leds, segment_length, color);
     } else {
       fadeToBlackBy(leds, segment_length, 8);
@@ -43,6 +45,9 @@ protected:
 
   CRGB color;
   uint8_t length;
+  uint16_t time_since_last_strike = 1000;
+  uint16_t time_of_last_strike = 0;
+  uint16_t min_time_between_strikes = 800;
 
 };
 
