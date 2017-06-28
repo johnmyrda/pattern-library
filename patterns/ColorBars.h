@@ -8,7 +8,9 @@ class ColorBars: public Pattern{
 
 public:
 
-
+  ColorBars(){
+    randomize();
+  }
 
   ColorBars(CRGB color1, CRGB color2, const uint8_t length): color1(color1), color2(color2), length(length){}
 
@@ -22,6 +24,7 @@ public:
 
   void randomize(){
     fillRandomContrastingColors(color1, color2);
+    length = random(4,10);
   }
 
 protected:

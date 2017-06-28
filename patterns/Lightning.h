@@ -54,7 +54,7 @@ protected:
   uint16_t time_since_last_strike = 1000;
   uint16_t time_of_last_strike = 0;
   uint16_t min_time_between_strikes = 800;
-  const uint8_t strike_frequency = 5;
+  const uint8_t strike_frequency = 85;
 
 };
 

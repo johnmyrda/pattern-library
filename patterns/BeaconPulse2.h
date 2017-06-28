@@ -31,8 +31,8 @@ public:
     }
     prev_brightness = cur_brightness;
     //uint8_t cur_beacon_number = (frame / wavelength) % num_beacons;
-    Serial.print("cur_brightness: ");
-    Serial.println(cur_brightness);
+    // Serial.print("cur_brightness: ");
+    // Serial.println(cur_brightness);
     for(uint16_t i = 0; i < leds.length; i++){
       uint8_t cur_beacon = i / LEDS_PER_BEACON;
       if((cur_beacon + beacon_number) % 2){
