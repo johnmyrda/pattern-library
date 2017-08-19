@@ -6,7 +6,11 @@ PatternController::PatternController(CRGB * leds, uint16_t length){
 
 //FPS = 1000/frame_interval
 void PatternController::set_fps(uint8_t fps){
-  frame_interval = 1000/fps;
+  if(fps == 0){
+    frame_interval = DEFAULT_FRAME_INTERVAL; // avoiding divide by zero
+  } else{
+    frame_interval = 1000/fps;
+  }
 }
 
 void PatternController::add(Pattern * pattern){
@@ -34,10 +38,17 @@ void PatternController::show(){
     next_pattern();
   }
 
-  uint32_t elapsed = now - last_frame_start_ts;
-  if(elapsed > frame_interval){ //&& elapsed < frame_interval*2
+  uint16_t cur_frame_interval;
+  if(patterns[current_pattern]->frame_interval != 0){
+    cur_frame_interval = patterns[current_pattern]->frame_interval;
+  } else {
+    cur_frame_interval = frame_interval;
+  }
+
+  uint32_t elapsed = now - frame_ts;
+  if(elapsed > cur_frame_interval){ //&& elapsed < frame_interval*2
     frame = frame+1;
-    last_frame_start_ts = last_frame_start_ts + frame_interval;//*num_frames. num_frames = elapsed/frame_interval
+    frame_ts = frame_ts + cur_frame_interval;//*num_frames. num_frames = elapsed/frame_interval
     patterns[current_pattern]->call(_leds, frame);
   }
 }
@@ -45,7 +56,7 @@ void PatternController::show(){
 void PatternController::select_pattern(uint8_t pattern_index){
   current_pattern = pattern_index % pattern_array_size; // ensures all possible inputs are valid
   pattern_start_ts = now; // should this be last pattern start + pattern duration instead?
-  last_frame_start_ts = pattern_start_ts;
+  frame_ts = pattern_start_ts;
   frame = 0;
   if(randomize){
     Serial.print("Randomizing pattern #");

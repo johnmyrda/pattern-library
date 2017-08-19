@@ -10,6 +10,8 @@
 #define PATTERN_ARRAY_MAX_SIZE 8
 #endif
 
+#define DEFAULT_FRAME_INTERVAL 100
+
 class PatternController
 {
   //need to keep track of time at a class level
@@ -20,14 +22,14 @@ class PatternController
   uint8_t pattern_array_size = 0;
   uint32_t now = 0;
   uint32_t pattern_start_ts = 0;
-  uint32_t last_frame_start_ts = 0;
+  uint32_t frame_ts = 0;
 
 
 public:
     bool cycle = true;
     bool randomize = true;
     uint32_t pattern_duration = 30000;//ms
-    uint16_t frame_interval = 100; //ms
+    uint16_t frame_interval = DEFAULT_FRAME_INTERVAL; //ms
     uint16_t frame = 0;
 
 
