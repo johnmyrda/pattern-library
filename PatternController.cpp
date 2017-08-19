@@ -29,27 +29,31 @@ void PatternController::clear(){
 void PatternController::show(){
   now = millis();
 
-  if((now - pattern_start_ts) > pattern_duration && cycle){
+  if(cycle && (now - pattern_start_ts) > pattern_duration){
     Serial.println(F("next_pattern"));
     next_pattern();
   }
-  uint16_t new_frame = (now - pattern_start_ts) / frame_interval;
-  if(new_frame != frame){
-    frame = new_frame;
+
+  uint32_t elapsed = now - last_frame_start_ts;
+  if(elapsed > frame_interval){ //&& elapsed < frame_interval*2
+    frame = frame+1;
+    last_frame_start_ts = last_frame_start_ts + frame_interval;//*num_frames. num_frames = elapsed/frame_interval
     patterns[current_pattern]->call(_leds, frame);
   }
 }
 
-void PatternController::next_pattern(){
-  current_pattern++;
-  if(current_pattern >= pattern_array_size){
-    current_pattern = 0;
-  }
-  pattern_start_ts = now;
+void PatternController::select_pattern(uint8_t pattern_index){
+  current_pattern = pattern_index % pattern_array_size; // ensures all possible inputs are valid
+  pattern_start_ts = now; // should this be last pattern start + pattern duration instead?
+  last_frame_start_ts = pattern_start_ts;
+  frame = 0;
   if(randomize){
     Serial.print("Randomizing pattern #");
     Serial.println(current_pattern);
     patterns[current_pattern]->randomize();
   }
+}
 
+void PatternController::next_pattern(){
+  select_pattern(current_pattern + 1);
 }

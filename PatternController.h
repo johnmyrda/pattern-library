@@ -20,6 +20,7 @@ class PatternController
   uint8_t pattern_array_size = 0;
   uint32_t now = 0;
   uint32_t pattern_start_ts = 0;
+  uint32_t last_frame_start_ts = 0;
 
 
 public:
@@ -45,6 +46,9 @@ public:
 
     //remove all patterns from list of patterns
     void clear();
+
+    //Select pattern by index. Wraps around if pattern index > number of patterns
+    void select_pattern(uint8_t pattern_index);
 
     //skip the current pattern
     void next_pattern();
