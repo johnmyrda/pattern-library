@@ -7,15 +7,22 @@ class Rainbow: public Pattern{
 
 public:
 
-  Rainbow(uint8_t rainbow_density) : rainbow_density(rainbow_density){}
+  Rainbow(int8_t rainbow_density) : rainbow_density(rainbow_density){}
 
   void call(LedArray leds, uint16_t frame){
     leds.push(CRGB::Black);
-    fill_rainbow(leds.head, 1, frame * rainbow_density);
+    if(rainbow_density >-2 && rainbow_density <2){
+      fill_rainbow(leds.head, 1, frame);
+    } else if(rainbow_density>1){
+      fill_rainbow(leds.head, 1, frame * rainbow_density);
+    } else {
+      fill_rainbow(leds.head, 1, (frame / -rainbow_density));
+    }
+
   }
 
 protected:
-  uint8_t rainbow_density;
+  int8_t rainbow_density;
 
 };
 
