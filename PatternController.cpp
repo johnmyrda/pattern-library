@@ -17,7 +17,7 @@ void PatternController::add(Pattern * pattern){
   if(pattern_array_size < PATTERN_ARRAY_MAX_SIZE){
     patterns[pattern_array_size] = pattern;
     pattern_array_size++;
-    Serial.println("Pattern Added");
+    //Serial.println("Pattern Added");
   }
   //Debug message if full?
 }
@@ -34,7 +34,7 @@ void PatternController::show(){
   now = millis();
 
   if(cycle && (now - pattern_start_ts) > pattern_duration){
-    Serial.println(F("next_pattern"));
+    //Serial.println(F("next_pattern"));
     next_pattern();
   }
 
@@ -59,8 +59,8 @@ void PatternController::select_pattern(uint8_t pattern_index){
   frame_ts = pattern_start_ts;
   frame = 0;
   if(randomize){
-    Serial.print("Randomizing pattern #");
-    Serial.println(current_pattern);
+    //Serial.print("Randomizing pattern #");
+    //Serial.println(current_pattern);
     patterns[current_pattern]->randomize();
   }
 }
