@@ -8,7 +8,9 @@ class LarsonScanner: public Pattern{
 
 public:
 
-  //LarsonScanner(){};
+  LarsonScanner(){
+    randomize();
+  };
 
   LarsonScanner(CRGB color1, CRGB color2) : color1(color1), color2(color2){}
 
