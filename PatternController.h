@@ -7,7 +7,7 @@
 #include <FastLED.h>
 
 #ifndef PATTERN_ARRAY_MAX_SIZE
-#define PATTERN_ARRAY_MAX_SIZE 8
+#define PATTERN_ARRAY_MAX_SIZE 12
 #endif
 
 #define DEFAULT_FRAME_INTERVAL 100
@@ -28,7 +28,7 @@ class PatternController
 public:
     bool cycle = true;
     bool randomize = true;
-    uint32_t pattern_duration = 30000;//ms
+    uint32_t pattern_duration = 15000;//ms
     uint16_t frame_interval = DEFAULT_FRAME_INTERVAL; //ms
     uint16_t frame = 0;
 
