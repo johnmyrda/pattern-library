@@ -2,7 +2,6 @@
 #define LARSONSCANNER_H
 
 #include "Pattern.h"
-#include "Util.h"
 
 class LarsonScanner: public Pattern{
 

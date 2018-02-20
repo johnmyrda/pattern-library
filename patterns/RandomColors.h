@@ -2,7 +2,6 @@
 #define RANDOMCOLORS_H
 
 #include "Pattern.h"
-#include "Util.h"
 
 class RandomColors: public Pattern{
 

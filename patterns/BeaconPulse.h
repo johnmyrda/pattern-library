@@ -2,7 +2,6 @@
 #define BEACONPULSE_H
 
 #include "Pattern.h"
-#include "Util.h"
 #include "BeaconUtil.h"
 
 class BeaconPulse: public Pattern{

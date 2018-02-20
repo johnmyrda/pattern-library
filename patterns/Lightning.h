@@ -2,7 +2,6 @@
 #define LIGHTNING_H
 
 #include "Pattern.h"
-#include "Util.h"
 
 class Lightning: public Pattern{
 

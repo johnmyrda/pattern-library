@@ -2,7 +2,6 @@
 #define BEACONSCANNER_H
 
 #include "Pattern.h"
-#include "Util.h"
 #include "BeaconUtil.h"
 
 class BeaconScanner: public Pattern{

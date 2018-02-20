@@ -2,7 +2,6 @@
 #define COLORBARS_H
 
 #include "Pattern.h"
-#include "Util.h"
 
 class ColorBars: public Pattern{
 

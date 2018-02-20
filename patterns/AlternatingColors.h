@@ -2,7 +2,6 @@
 #define ALTERNATINGCOLORS_H
 
 #include "Pattern.h"
-#include "Util.h"
 
 class AlternatingColors: public Pattern{
 
