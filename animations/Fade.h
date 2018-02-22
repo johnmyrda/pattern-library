@@ -15,22 +15,22 @@ public:
 
   Fade(CRGB* leds, int num_leds, int num_frames, CRGB new_color)
              : Animation(leds, num_leds, num_frames) {
-               color = color;
+               color_ = new_color;
              }
 
   void generateNextFrame(){
-    CRGB faded = color;
+    CRGB faded = color_;
     uint8_t dim_value = 255 - (frame_ + 1)*255/num_frames_;
     faded.nscale8(dim_value);
     fill_solid(leds_.head, leds_.length, faded);
   }
 
   void randomize(){
-    color = Pattern::random_color();
+    color_ = Pattern::random_color();
   }
 
 protected:
-  CRGB color;
+  CRGB color_;
 
 };
 
