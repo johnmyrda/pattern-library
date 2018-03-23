@@ -43,8 +43,8 @@ void setup(){
   FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalSMD5050);
   ...
   //PatternController setup
-  pattern_master.add(&alt);
   pattern_master.add(&cb);
+  pattern_master.add(&grad);
 }
 ```
 and in the main loop, call the .show() method of the PatternController before FastLED.show()
