@@ -57,4 +57,4 @@ void loop(){
 ```
 
 
-For a usage example, see [multi-beacon.spp](https://github.com/johnmyrda/multi-beacon/blob/master/src/multi-beacon.cpp) from my [LED Beacon](https://github.com/johnmyrda/multi-beacon) project.
+For a usage example, see [multi-beacon.cpp](https://github.com/johnmyrda/multi-beacon/blob/master/src/multi-beacon.cpp) from my [LED Beacon](https://github.com/johnmyrda/multi-beacon) project.
